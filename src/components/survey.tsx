@@ -52,7 +52,7 @@ export default function Survey({ user }: { user: User }) {
   }
   return (
     <div className="max-w-xl mx-auto space-y-4 flex flex-col items-center ">
-      <div className="max-h-[calc(100vh-190px)] overflow-y-auto space-y-3 p-2 border rounded">
+      <div className="max-h-[calc(100vh-200px)] overflow-y-auto space-y-3 p-2 border rounded">
         {data ? (
           data?.map((survey, i) => (
             <div key={i} className="border rounded p-4 shadow-sm bg-white">

@@ -5,11 +5,14 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { auth } from "auth";
+import { Github } from "lucide-react";
+import Link from "next/link";
 
 export default async function Home() {
   const session = await auth();
@@ -21,7 +24,7 @@ export default async function Home() {
     );
   return (
     <div className="flex flex-col items-center justify-center">
-      <Card className="w-full max-w-sm">
+      <Card className="w-full max-w-sm pb-2 ">
         <Tabs defaultValue="survey">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
@@ -29,7 +32,6 @@ export default async function Home() {
               <SignOut />
             </CardTitle>
             <CardDescription className="text-sm text-muted-foreground">
-              {/* View your attendance records for the selected date. */}
               <TabsList>
                 <TabsTrigger value="survey">Survey</TabsTrigger>
                 <TabsTrigger value="calendar">Calendar</TabsTrigger>
@@ -47,6 +49,14 @@ export default async function Home() {
               </div>
             </TabsContent>
           </CardContent>
+          <CardFooter className="flex flex-col items-center justify-center">
+            <Link
+              className="text-sm text-muted-foreground"
+              href="https://github.com/e3ob/Better-Etlab"
+            >
+              Source Code <Github className="inline h-4 w-4" />
+            </Link>
+          </CardFooter>
         </Tabs>
       </Card>
     </div>
