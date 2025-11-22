@@ -37,3 +37,24 @@ export interface Period {
     topic_cov: string[]
     attendance: string
 }
+
+export interface Surveys {
+    type: string
+    name: string
+    session: string
+    session_id: string
+    last_date: string
+    complete: boolean
+    survey_id: string
+    btn_status: string
+}
+
+export interface SurveyQuestions5 {
+    question: string
+    qid: string
+    type: string
+    required: string
+    option: string[]
+    id: string[]
+    check: string[]
+}

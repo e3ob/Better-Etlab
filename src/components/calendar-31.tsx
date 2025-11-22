@@ -1,5 +1,4 @@
 "use client";
-
 import * as React from "react";
 import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
 import {
@@ -10,13 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { SignOut } from "./auth";
 import { cn, getDate } from "@/lib/utils";
 import { User } from "@/types";
 import { useGetAttendance } from "@/hooks/query";
 import { useState } from "react";
 import { getDay } from "date-fns";
-import { Dot } from "lucide-react";
+import { Badge } from "./ui/badge";
 
 export default function Calendar31({ user }: { user: User }) {
   const [date, setDate] = useState<Date>(getDate());
@@ -25,8 +23,7 @@ export default function Calendar31({ user }: { user: User }) {
     <Card className="w-sm py-4">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
-          <span>Attendance of {user.profile_name}</span>
-          <SignOut />
+          <span>Attendance</span>
         </CardTitle>
         <CardDescription className="text-sm text-muted-foreground">
           View your attendance records for the selected date.
@@ -45,6 +42,7 @@ export default function Calendar31({ user }: { user: User }) {
             setDate(refDate);
             refetch();
           }}
+          onDayClick={setDate}
           components={{
             DayButton: ({ children, modifiers, day, className, ...props }) => {
               const att = data?.attends?.find(
@@ -55,31 +53,34 @@ export default function Calendar31({ user }: { user: User }) {
                 <CalendarDayButton
                   day={day}
                   modifiers={modifiers}
-                  className={cn(
-                    className,
-                    "h-full w-full"
-                  )}
+                  className={cn(className, "h-full w-full")}
                   {...props}
                 >
                   {children}
                   {!modifiers.outside && att && (
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-0">
-                      {att.periods.map(
-                        (period, idx) =>
-                          period.attendance !== "N/A" && (
-                            <Dot
-                              key={idx}
-                              size={5}
-                              color={
-                                period.attendance === "present"
-                                  ? "green"
-                                  : "red"
-                              }
-                            
-                            />
-                          )
-                      )}
-                    </div>
+                    <span className="">
+                      {/* <div>
+                        <Badge className="bg-green-600 ">
+                          P -{" "}
+                          {
+                            att.periods.filter(
+                              (period) => period.attendance === "present"
+                            ).length
+                          }
+                        </Badge>
+                      </div> */}
+                      <div>
+                        {" "}
+                        <Badge className="bg-red-600 ">
+                          A -{" "}
+                          {
+                            att.periods.filter(
+                              (period) => period.attendance === "absent"
+                            ).length
+                          }
+                        </Badge>
+                      </div>
+                    </span>
                   )}
                 </CalendarDayButton>
               );

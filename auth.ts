@@ -1,4 +1,4 @@
-import Axios from "@/lib/axios";
+import { ApiHandler } from "@/lib/axios";
 import { User } from "@/types";
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
@@ -12,7 +12,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       password: { label: "Password", type: "password" },
     },
     async authorize(credentials) {
-      const { data } = await Axios.post("/login", credentials)
+      const { data } = await ApiHandler.post("/login", credentials)
       if (!data.login) return null
       return data;
     },
