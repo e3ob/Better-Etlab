@@ -51,7 +51,7 @@ async function submitSurvey(survey: Surveys, user: User) {
             data.forEach((question) => {
                 params.append(`Option[${question.qid}]`, question.option[0]);
             })
-            const { data: response } = await ApiHandler.post("/submitsurvey", params.toString(), {
+            await ApiHandler.post("/submitsurvey", params.toString(), {
                 headers: {
                     Authorization: `Bearer ${user.access_token}`
                 }

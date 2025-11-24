@@ -4,8 +4,15 @@ import { User } from "@/types";
 import { Spinner } from "./ui/spinner";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { Item, ItemContent, ItemMedia, ItemTitle } from "./ui/item";
-import { useState } from "react";
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemTitle,
+} from "./ui/item";
+import { useState, Fragment } from "react";
 import { toast } from "sonner";
 import { submitSurvey } from "@/lib/axios";
 
@@ -52,31 +59,48 @@ export default function Survey({ user }: { user: User }) {
   }
   return (
     <div className="max-w-xl mx-auto space-y-4 flex flex-col items-center ">
-      <div className="max-h-[calc(100vh-200px)] overflow-y-auto space-y-3 p-2 border rounded">
-        {data ? (
+      <ItemGroup className="max-h-[calc(100vh-250px)] overflow-y-auto space-y-3 p-2  rounded w-full">
+        {data && data.length > 0 ? (
           data?.map((survey, i) => (
-            <div key={i} className="border rounded p-4 shadow-sm bg-white">
-              <p className="font-semibold text-lg">{survey.name}</p>
-
-              <div className="mt-2 text-sm flex flex-col gap-1">
-                <Badge
-                  className={
-                    survey.survey_id === "" ? "bg-red-500" : "bg-green-500"
-                  }
-                >
-                  <span className="font-medium">Last Date:</span>{" "}
-                  {survey.last_date}
-                </Badge>
-                {survey.complete && (
-                  <Badge className="bg-green-500 ">Completed</Badge>
-                )}
-              </div>
-            </div>
+            <Fragment key={i}>
+              <Item
+                variant={
+                  !survey.complete && survey.survey_id !== ""
+                    ? "outline"
+                    : "muted"
+                }
+              >
+                <ItemContent>
+                  <ItemTitle className="line-clamp-1 ">
+                    {survey.complete && (
+                      <Badge className="bg-green-500">Completed</Badge>
+                    )}
+                    {!survey.complete && survey.survey_id !== "" && (
+                      <Badge className="bg-yellow-500"></Badge>
+                    )}
+                  </ItemTitle>
+                  <ItemDescription>{survey.name}</ItemDescription>
+                </ItemContent>
+                <ItemMedia>
+                  {survey.survey_id === "" ? (
+                    <Badge className="bg-red-500">Last Date Over</Badge>
+                  ) : (
+                    <Badge className="bg-green-500">{survey.last_date}</Badge>
+                  )}
+                </ItemMedia>
+              </Item>
+            </Fragment>
           ))
         ) : (
-          <></>
+          <Item variant="muted">
+            <ItemContent>
+              <ItemTitle className="line-clamp-1">
+                No surveys available
+              </ItemTitle>
+            </ItemContent>
+          </Item>
         )}
-      </div>
+      </ItemGroup>
       {data && (
         <Button
           disabled={submitting || !(tos && tos.length > 0)}
