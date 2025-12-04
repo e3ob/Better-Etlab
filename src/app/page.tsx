@@ -50,6 +50,9 @@ export default async function Home() {
             </TabsContent>
           </CardContent>
           <CardFooter className="flex flex-col items-center justify-center">
+            <Link href="https://github.com/e3ob">
+              Made with ❤️ by <u>Eldho</u>
+            </Link>
             <Link
               className="text-sm text-muted-foreground"
               href="https://github.com/e3ob/Better-Etlab"

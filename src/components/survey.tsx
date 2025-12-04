@@ -76,7 +76,7 @@ export default function Survey({ user }: { user: User }) {
                       <Badge className="bg-green-500">Completed</Badge>
                     )}
                     {!survey.complete && survey.survey_id !== "" && (
-                      <Badge className="bg-yellow-500"></Badge>
+                      <Badge className="bg-yellow-500">Pending</Badge>
                     )}
                   </ItemTitle>
                   <ItemDescription>{survey.name}</ItemDescription>
